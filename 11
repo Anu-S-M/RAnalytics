@@ -1,0 +1,38 @@
+# Task 1: Load the Dataset
+# Assuming the CSV file is named customer_purchases.csv and is in the working directory
+library(readr)
+library(dplyr)
+
+
+purchase_data<- read_csv("C:/Users/anusm/Downloads/customer_purchases - customer_purchases.csv")
+
+
+# Task 2: Data Summary
+total_records <- nrow(purchase_data)
+unique_customers <- n_distinct(purchase_data$Customer_ID)
+
+cat("Total number of records:", total_records, "\n")
+cat("Total number of unique customers:", unique_customers, "\n\n")
+
+# Task 3: Calculate Statistical Measures
+mean_purchase <- mean(purchase_data$Purchase_Amount)
+median_purchase <- median(purchase_data$Purchase_Amount)
+std_dev_purchase <- sd(purchase_data$Purchase_Amount)
+
+cat("Mean purchase amount:", mean_purchase, "\n")
+cat("Median purchase amount:", median_purchase, "\n")
+cat("Standard deviation of purchase amounts:", std_dev_purchase, "\n\n")
+
+# Task 4: Customer Segmentation
+purchase_data <- mutate(purchase_data, segment = ifelse(Purchase_Amount < median_purchase, "Low Spender", "High Spender"))
+print(purchase_data)
+
+# Task 5: Visualize Data
+library(ggplot2)
+
+ggplot(purchase_data, aes(x = Purchase_Amount)) +
+  geom_histogram(binwidth = 50, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Purchase Amounts",
+       x = "Purchase Amount",
+       y = "Frequency") +
+  theme_minimal()
