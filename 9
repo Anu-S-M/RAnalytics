@@ -1,0 +1,41 @@
+# Load necessary libraries
+library(ggplot2)
+
+# Create example student data
+set.seed(123)
+num_students <- 10
+students <- data.frame(
+  StudentName = paste("Student", 1:num_students),
+  Scores = sample(60:100, num_students, replace = TRUE),
+  AttendancePercentage = sample(70:100, num_students, replace = TRUE)
+)
+
+# Task 1: Create a scatter plot
+scatter_plot <- ggplot(students, aes(x = Scores, y = AttendancePercentage)) +
+  geom_point(color = "blue", size = 3) +
+  labs(title = "Relationship between Scores and Attendance",
+       x = "Scores", y = "Attendance Percentage")
+
+# Task 2: Generate a bar plot
+bar_plot <- ggplot(students, aes(x = StudentName, y = Scores)) +
+  geom_bar(stat = "identity", fill = "green") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Distribution of Scores Among Students",
+       x = "Student Name", y = "Scores")
+
+# Task 3: Create a line plot
+line_plot <- ggplot(students, aes(x = StudentName, y = Scores, group = 1)) +
+  geom_line(color = "red") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Trend of Scores Over Time",
+       x = "Student Name", y = "Scores")
+
+# Task 4: Generate a histogram
+histogram <- ggplot(students, aes(x = Scores, fill = ..count..)) +
+  geom_histogram(binwidth = 5, color = "black", fill = "orange") +
+  labs(title = "Distribution of Scores",
+       x = "Scores", y = "Count")
+
+# Arrange the plots in a grid
+library(gridExtra)
+grid.arrange(scatter_plot, bar_plot, line_plot, histogram, ncol = 2)
